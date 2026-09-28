@@ -1,0 +1,31 @@
+# Python & Sanal Ortam
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Buyuk Agirlik Dosyalari (GitHub 100MB limitini asmamak icin)
+*.pt
+*.pth
+*.onnx
+*.index
+*.bin
+*.tar
+*.zip
+
+# Calisma Dizinleri ve Gecici Dosyalar
+upload_dir/
+model_dir/
+tmp_dir/
+logs/
+.system_generated/
+*.log
+
+# IDE & Sistem
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
