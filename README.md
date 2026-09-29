@@ -15,13 +15,27 @@
 
 ### ✨ Öne Çıkan Özellikler
 
-* **🎭 FiveM RP ve Telsiz Kalibrasyonu**: RP sunucularında anlık konuşmalar için ultra düşük gecikme (**~75 ms**). Telsiz ve diyaloglarda gecikme hissedilmez.
-* **🎯 Warzone & Rekabetçi FPS Uyumluluğu**: Yoğun çatışma anlarında GPU %100'e dayansa bile ses tamponunu korur, takılma ve robotlaşmayı önler.
-* **🛡️ Yayıncı Koruma Modu (OBS / Kick / Twitch)**: Saatlerce süren canlı yayınlarda sıfır mikro-takılma garantisi.
-* **⏱️ Windows 1ms Donanımsal Zamanlayıcı Kilidi (`timeBeginPeriod`)**: Windows'un arka plan uyku dalgalanmalarını 1 ms'ye indirgeyerek seste sıçramaları engeller.
-* **⚡ 1.4 GB VRAM Güvenlik Kalkanı**: Yapay zekanın aşırı VRAM harcamasını engelleyerek OBS Studio ve oyunlar için **6.6 GB+ VRAM'i tamamen serbest** bırakır.
-* **🔇 Akıllı Sessizlik Eşiği (Noise Gate)**: Konuşmadığınız anlarda yapay zeka GPU kullanımını **%0'a** düşürür. Ekran kartınız boş yere yorulmaz.
-* **🟣 Ripleytia Gothic Mor Tasarımı**: Özel karanlık mor siberpunk arayüz, anlık değişen sayısal göstergeler ve canlı MS gecikme monitörü.
+* **⚡ Gömülü Hızlı DSP / 4 Ses Profili (Yapay Zekasız & %0 GPU Yükü)**:
+  * **Kadın, Erkek, Çocuk ve Robot** olmak üzere 4 hazır dahili ses profili.
+  * Hiçbir yapay zeka (AI) modeli gerektirmeden, **ultra düşük gecikme (~5 ms)** ile anlık çalışır.
+  * Ekran kartınız (GPU) %0 kullanımda kalır; tüm GPU gücü FiveM, Warzone ve OBS yayınına ayrılır.
+* **🎛️ Detaylı 5-Bant Parametrik Ekolayzır (Parametric EQ)**:
+  * Her profil için özelleştirilebilir frekans bantları (Düşük, Orta, Yüksek).
+  * Filtre tipleri: **Peaking (Çan), Low-Shelf (Düşük Raf), High-Shelf (Yüksek Raf), Low-Pass, High-Pass, Band-Pass, Notch (Çentik)**.
+  * Hassas Kazanç (Gain dB) ve Q Faktörü (Bant Genişliği) ayarları.
+* **🎵 Donanımsal Pitch & Siber Robot Modülatörü**:
+  * Çift gecikme hatlı pürüzsüz perde kaydırma (Semitone & Fine-tune cents).
+  * Halka modülasyonu (Ring Modulation) ve metalik tarak filtresi (Comb Resonator) ile siborg robot sesi.
+* **🗜️ Vokal Dinamik Kompresörü & Noise Gate**:
+  * Eşik (Threshold), Sıkıştırma Oranı (Ratio), Attack, Release ve Makyaj Kazancı (Makeup Gain).
+  * Arka plan klavye, fan ve oda gürültüsünü konuşulmadığı anlarda tamamen kesen akıllı gürültü kapısı.
+* **🔊 Windows Sanal Ses Kablosu (CABLE Input) & Kulaklık Monitörü**:
+  * Sesi doğrudan **VB-Audio Virtual Cable (CABLE Input)** cihazına aktararak Discord, FiveM, TeamSpeak, OBS ve Warzone'a tek tıkla iletme.
+  * **"Kendi Sesimi Duy"** kulaklık monitörü ile sesinizin nasıl gittiğini anlık olarak dinleme.
+* **🤖 Ripleytia AI (RVC Model Klonlama) Modu**:
+  * İstendiğinde tek tıkla gelişmiş RVC yapay zeka model dönüştürme moduna geçiş.
+  * FiveM RP, Warzone ve Yayıncı profilleri ile 1ms Windows zamanlayıcı ve VRAM kalkanı.
+* **🟣 Ripleytia Gothic Mor Tasarımı**: Özel karanlık mor siberpunk arayüz ve canlı MS performans monitörü.
 
 ---
 

@@ -1,0 +1,246 @@
+{
+  "Kadın": {
+    "name": "Kadın",
+    "description": "Doğal kadın sesi tınısı, tiz netliği ve göğüs rezonansı filtreleme",
+    "pitch_semitones": 5.0,
+    "pitch_fine_cents": 0.0,
+    "robot_enabled": false,
+    "robot_carrier_hz": 70.0,
+    "robot_depth": 0.0,
+    "robot_resonance": 0.0,
+    "eq_bands": [
+      {
+        "name": "Sub-Bass Kesme",
+        "type": "highpass",
+        "freq": 130.0,
+        "gain": 0.0,
+        "q": 0.707,
+        "enabled": true
+      },
+      {
+        "name": "Göğüs Tonu (Low-Shelf)",
+        "type": "lowshelf",
+        "freq": 240.0,
+        "gain": -4.5,
+        "q": 1.0,
+        "enabled": true
+      },
+      {
+        "name": "Gövde / Vokal",
+        "type": "peaking",
+        "freq": 1200.0,
+        "gain": 2.0,
+        "q": 1.2,
+        "enabled": true
+      },
+      {
+        "name": "Kadın Rezonansı & Parlaklık",
+        "type": "peaking",
+        "freq": 3500.0,
+        "gain": 4.5,
+        "q": 1.5,
+        "enabled": true
+      },
+      {
+        "name": "Hava & Nefes (High-Shelf)",
+        "type": "highshelf",
+        "freq": 9000.0,
+        "gain": 3.0,
+        "q": 0.9,
+        "enabled": true
+      }
+    ],
+    "dynamics": {
+      "gate_threshold_db": -45.0,
+      "comp_threshold_db": -18.0,
+      "comp_ratio": 3.0,
+      "attack_ms": 10.0,
+      "release_ms": 100.0,
+      "makeup_gain_db": 2.5,
+      "output_gain_db": 0.0
+    }
+  },
+  "Erkek": {
+    "name": "Erkek",
+    "description": "Derin bas, tok göğüs rezonansı ve sinematik karanlık erkek tonu",
+    "pitch_semitones": -4.0,
+    "pitch_fine_cents": 0.0,
+    "robot_enabled": false,
+    "robot_carrier_hz": 50.0,
+    "robot_depth": 0.0,
+    "robot_resonance": 0.0,
+    "eq_bands": [
+      {
+        "name": "Alt Frekans Temizleme",
+        "type": "highpass",
+        "freq": 65.0,
+        "gain": 0.0,
+        "q": 0.707,
+        "enabled": true
+      },
+      {
+        "name": "Derin Göğüs Bası (Low-Shelf)",
+        "type": "lowshelf",
+        "freq": 140.0,
+        "gain": 5.0,
+        "q": 1.2,
+        "enabled": true
+      },
+      {
+        "name": "Kutu Tınısını Azaltma",
+        "type": "peaking",
+        "freq": 800.0,
+        "gain": -2.5,
+        "q": 1.0,
+        "enabled": true
+      },
+      {
+        "name": "Konuşma Anlaşılırlığı",
+        "type": "peaking",
+        "freq": 2600.0,
+        "gain": 1.5,
+        "q": 1.3,
+        "enabled": true
+      },
+      {
+        "name": "Koyu Ton (High-Shelf)",
+        "type": "highshelf",
+        "freq": 7000.0,
+        "gain": -2.0,
+        "q": 1.0,
+        "enabled": true
+      }
+    ],
+    "dynamics": {
+      "gate_threshold_db": -46.0,
+      "comp_threshold_db": -16.0,
+      "comp_ratio": 3.5,
+      "attack_ms": 15.0,
+      "release_ms": 120.0,
+      "makeup_gain_db": 2.0,
+      "output_gain_db": 0.0
+    }
+  },
+  "Çocuk": {
+    "name": "Çocuk",
+    "description": "Yüksek perde (anime/çocuksu ton), hafif göğüs ve dinamik tizler",
+    "pitch_semitones": 8.5,
+    "pitch_fine_cents": 0.0,
+    "robot_enabled": false,
+    "robot_carrier_hz": 90.0,
+    "robot_depth": 0.0,
+    "robot_resonance": 0.0,
+    "eq_bands": [
+      {
+        "name": "Yetişkin Basını Kesme",
+        "type": "highpass",
+        "freq": 190.0,
+        "gain": 0.0,
+        "q": 0.707,
+        "enabled": true
+      },
+      {
+        "name": "Kalınlık Azaltma",
+        "type": "peaking",
+        "freq": 350.0,
+        "gain": -6.0,
+        "q": 1.5,
+        "enabled": true
+      },
+      {
+        "name": "Çocuksu Vokal Tınısı",
+        "type": "peaking",
+        "freq": 1800.0,
+        "gain": 3.5,
+        "q": 1.3,
+        "enabled": true
+      },
+      {
+        "name": "Tiz Canlılık",
+        "type": "peaking",
+        "freq": 4500.0,
+        "gain": 5.0,
+        "q": 1.2,
+        "enabled": true
+      },
+      {
+        "name": "Işıltı (High-Shelf)",
+        "type": "highshelf",
+        "freq": 10000.0,
+        "gain": 2.0,
+        "q": 0.8,
+        "enabled": true
+      }
+    ],
+    "dynamics": {
+      "gate_threshold_db": -42.0,
+      "comp_threshold_db": -20.0,
+      "comp_ratio": 4.0,
+      "attack_ms": 5.0,
+      "release_ms": 80.0,
+      "makeup_gain_db": 3.0,
+      "output_gain_db": 0.0
+    }
+  },
+  "Robot": {
+    "name": "Robot",
+    "description": "Siber siborg / yapay zeka robot sesi, ring modülasyonu ve metalik rezonatör",
+    "pitch_semitones": 0.0,
+    "pitch_fine_cents": 0.0,
+    "robot_enabled": true,
+    "robot_carrier_hz": 65.0,
+    "robot_depth": 0.85,
+    "robot_resonance": 0.65,
+    "eq_bands": [
+      {
+        "name": "Robot HPF",
+        "type": "highpass",
+        "freq": 150.0,
+        "gain": 0.0,
+        "q": 0.707,
+        "enabled": true
+      },
+      {
+        "name": "Metalik Rezonans Tepesi",
+        "type": "peaking",
+        "freq": 520.0,
+        "gain": 6.5,
+        "q": 4.0,
+        "enabled": true
+      },
+      {
+        "name": "Sentetik Telsiz Bandı",
+        "type": "peaking",
+        "freq": 1600.0,
+        "gain": 5.0,
+        "q": 3.0,
+        "enabled": true
+      },
+      {
+        "name": "Çentik (Notch) Filtresi",
+        "type": "notch",
+        "freq": 3100.0,
+        "gain": -12.0,
+        "q": 5.0,
+        "enabled": true
+      },
+      {
+        "name": "Telekom Sınırı (LPF)",
+        "type": "lowpass",
+        "freq": 6500.0,
+        "gain": -12.0,
+        "q": 1.2,
+        "enabled": true
+      }
+    ],
+    "dynamics": {
+      "gate_threshold_db": -40.0,
+      "comp_threshold_db": -14.0,
+      "comp_ratio": 8.0,
+      "attack_ms": 2.0,
+      "release_ms": 50.0,
+      "makeup_gain_db": 4.0,
+      "output_gain_db": 0.0
+    }
+  }
+}
