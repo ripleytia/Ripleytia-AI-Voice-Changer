@@ -25,9 +25,34 @@ try:
 except Exception:
     pass
 
-import customtkinter as ctk
-from PIL import Image, ImageTk
-import torch
+# Bağımlılık kontrolü ve otomatik onarım
+try:
+    import customtkinter as ctk
+    from PIL import Image, ImageTk
+    import torch
+except ModuleNotFoundError as e:
+    missing_mod = e.name
+    print(f"\n" + "=" * 60)
+    print(f" [UYARI] Gerekli Python modülü eksik: '{missing_mod}'")
+    print(f" Ripleytia AI otomatik olarak yüklüyor, lütfen bekleyin...")
+    print("=" * 60 + "\n")
+    try:
+        import subprocess
+        pkg = "Pillow" if missing_mod == "PIL" else missing_mod
+        subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+        import customtkinter as ctk
+        from PIL import Image, ImageTk
+        import torch
+        print(f"✓ '{missing_mod}' başarıyla yüklendi!\n")
+    except Exception as install_err:
+        print(f"\n[HATA] Otomatik kurulum tamamlanamadı: {install_err}")
+        print("Lütfen 'install.bat' dosyasını çalıştırarak tüm bağımlılıkları kurun.")
+        print("veya komut satırından: pip install -r requirements.txt\n")
+        try:
+            input("Çıkmak için Enter tuşuna basın...")
+        except Exception:
+            pass
+        sys.exit(1)
 
 # ── 1. DONANIM & WINDOWS OYUN / YAYIN OPTİMİZASYONLARI ──
 def apply_game_stream_optimizations():

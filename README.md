@@ -33,16 +33,15 @@
 - **Python**: Python 3.10.x önerilir
 - **Sanal Ses Kablosu**: VB-Audio Virtual Cable (Discord, OBS ve oyunlara sesi aktarmak için)
 
-#### 2. Kurulum
-1. Bu depoyu indirin veya klonlayın:
+#### 2. Kurulum ve Çalıştırma (Tek Tıkla Otomatik)
+1. Bu depoyu indirin (ZIP veya Git klonu):
    ```bash
    git clone https://github.com/ripleytia/Ripleytia-AI-Voice-Changer.git
    cd Ripleytia-AI-Voice-Changer
    ```
-2. `install.bat` dosyasına çift tıklayarak gerekli kütüphaneleri otomatik yükleyin.
-
-#### 3. Çalıştırma
-* `run.bat` dosyasına çift tıklayarak uygulamayı başlatın.
+2. **`run.bat`** dosyasına çift tıklayın!
+   * **Akıllı Otomatik Kurulum:** Sistem ilk açılışta Python ortamını, GPU (CUDA) PyTorch desteğini ve tüm kütüphaneleri otomatik olarak algılayıp kurar.
+   * Dilerseniz manuel olarak önce `install.bat` dosyasını çalıştırabilir, ardından `run.bat` ile açabilirsiniz.
 
 ---
 

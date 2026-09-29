@@ -1,12 +1,18 @@
 import torch
 from torch import device
 from voice_changer.RVC.embedder.Embedder import Embedder
-from fairseq import checkpoint_utils
+try:
+    from fairseq import checkpoint_utils
+except Exception:
+    checkpoint_utils = None
 
 
 class FairseqHubert(Embedder):
     def loadModel(self, file: str, dev: device, isHalf: bool = True) -> Embedder:
         super().setProps("hubert_base", file, dev, isHalf)
+
+        if checkpoint_utils is None:
+            raise RuntimeError("[Voice Changer] fairseq kütüphanesi yüklü değil. Lütfen ONNX embedder kullanın.")
 
         models, saved_cfg, task = checkpoint_utils.load_model_ensemble_and_task(
             [file],
