@@ -576,40 +576,134 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
         scroll_p = ctk.CTkScrollableFrame(parent, fg_color="transparent")
         scroll_p.pack(fill="both", expand=True, padx=4, pady=4)
 
-        # 1. Pitch Kaydırma Kartı
-        p_card = ctk.CTkFrame(scroll_p, fg_color="#190e29", corner_radius=10, border_width=1, border_color="#361752")
-        p_card.pack(fill="x", pady=6)
-        ctk.CTkLabel(p_card, text="🎤 Pitch Kaydırma (Yarım Ton & İnce Ayar)", font=FONT_H, text_color=C_TITLE).pack(anchor="w", padx=14, pady=(8, 4))
+        # 1. Anatomik Vokal Traktüs & Formant Modellemesi
+        f_card = ctk.CTkFrame(scroll_p, fg_color="#190e29", corner_radius=10, border_width=1, border_color="#361752")
+        f_card.pack(fill="x", pady=6)
+        ctk.CTkLabel(f_card, text="🗣️ Vokal Traktüs & Formant Modellemesi (Anatomik Boyut)", font=FONT_H, text_color=C_TITLE).pack(anchor="w", padx=14, pady=(8, 2))
+        ctk.CTkLabel(f_card, text="Boğaz ve ağız yolu rezonansını (F1-F4) kaydırarak teneke/robot ses etkisini önler", font=("Segoe UI", 10), text_color=C_SUB).pack(anchor="w", padx=14, pady=(0, 6))
 
-        # Semitones
-        f_st = ctk.CTkFrame(p_card, fg_color="transparent")
+        # Formant Shifting Slider
+        f_fmt = ctk.CTkFrame(f_card, fg_color="transparent")
+        f_fmt.pack(fill="x", padx=14, pady=(4, 0))
+        ctk.CTkLabel(f_fmt, text="Formant Kaydırma (%):", font=FONT_B, text_color=C_SUB).pack(side="left")
+        self.lbl_formant_val = ctk.CTkLabel(f_fmt, text="+0.0%", font=FONT_NUM, text_color=C_CYAN)
+        self.lbl_formant_val.pack(side="right")
+
+        self.sl_formant = ctk.CTkSlider(
+            f_card, from_=-25.0, to=35.0, number_of_steps=120, height=18,
+            button_color=C_ACCENT, button_hover_color=C_HOVER,
+            command=self._on_formant_slider
+        )
+        self.sl_formant.pack(fill="x", padx=14, pady=(2, 6))
+
+        # Pitch Semitones
+        f_st = ctk.CTkFrame(f_card, fg_color="transparent")
         f_st.pack(fill="x", padx=14, pady=(4, 0))
         ctk.CTkLabel(f_st, text="Perde Kaydırma (Yarım Ton / Semitone):", font=FONT_B, text_color=C_SUB).pack(side="left")
-        self.lbl_pitch_st = ctk.CTkLabel(f_st, text="+0.0 st", font=FONT_NUM, text_color=C_CYAN)
+        self.lbl_pitch_st = ctk.CTkLabel(f_st, text="+0.0 st", font=FONT_NUM, text_color=C_TITLE)
         self.lbl_pitch_st.pack(side="right")
 
         self.sl_pitch_st = ctk.CTkSlider(
-            p_card, from_=-12.0, to=12.0, number_of_steps=48, height=18,
+            f_card, from_=-14.0, to=16.0, number_of_steps=60, height=18,
             button_color=C_ACCENT, button_hover_color=C_HOVER,
             command=self._on_pitch_st_slider
         )
-        self.sl_pitch_st.pack(fill="x", padx=14, pady=(2, 8))
+        self.sl_pitch_st.pack(fill="x", padx=14, pady=(2, 6))
 
         # Fine Cents
-        f_fine = ctk.CTkFrame(p_card, fg_color="transparent")
+        f_fine = ctk.CTkFrame(f_card, fg_color="transparent")
         f_fine.pack(fill="x", padx=14, pady=(4, 0))
-        ctk.CTkLabel(f_fine, text="İnce Ayar (Cent):", font=FONT_B, text_color=C_SUB).pack(side="left")
+        ctk.CTkLabel(f_fine, text="İnce Perde Ayarı (Cent):", font=FONT_B, text_color=C_SUB).pack(side="left")
         self.lbl_pitch_fine = ctk.CTkLabel(f_fine, text="0 cent", font=FONT_NUM, text_color=C_TITLE)
         self.lbl_pitch_fine.pack(side="right")
 
         self.sl_pitch_fine = ctk.CTkSlider(
-            p_card, from_=-100.0, to=100.0, number_of_steps=100, height=18,
+            f_card, from_=-100.0, to=100.0, number_of_steps=100, height=18,
             button_color=C_ACCENT, button_hover_color=C_HOVER,
             command=self._on_pitch_fine_slider
         )
-        self.sl_pitch_fine.pack(fill="x", padx=14, pady=(2, 12))
+        self.sl_pitch_fine.pack(fill="x", padx=14, pady=(2, 10))
 
-        # 2. Siber Robot Modülatörü Kartı
+        # 2. Harmonik Zenginleştirici & Rezonans Filtreleri (Tube & Warmth Exciter)
+        h_card = ctk.CTkFrame(scroll_p, fg_color="#190e29", corner_radius=10, border_width=1, border_color="#361752")
+        h_card.pack(fill="x", pady=6)
+        ctk.CTkLabel(h_card, text="🔥 Harmonik Zenginleştirici & Sıcaklık (Saturation & Exciter)", font=FONT_H, text_color=C_TITLE).pack(anchor="w", padx=14, pady=(8, 2))
+        ctk.CTkLabel(h_card, text="Ses tellerinin doğal 2. ve 3. derece analog harmoniklerini üreterek dolgunluk katar", font=("Segoe UI", 10), text_color=C_SUB).pack(anchor="w", padx=14, pady=(0, 6))
+
+        # Tube Saturation
+        f_tube = ctk.CTkFrame(h_card, fg_color="transparent")
+        f_tube.pack(fill="x", padx=14, pady=(4, 0))
+        ctk.CTkLabel(f_tube, text="Analog Tüp / Bant Doygunluğu (Tube Saturation):", font=FONT_B, text_color=C_SUB).pack(side="left")
+        self.lbl_tube_val = ctk.CTkLabel(f_tube, text="%25", font=FONT_NUM, text_color=C_CYAN)
+        self.lbl_tube_val.pack(side="right")
+
+        self.sl_tube = ctk.CTkSlider(
+            h_card, from_=0.0, to=1.0, number_of_steps=50, height=18,
+            button_color=C_ACCENT, button_hover_color=C_HOVER,
+            command=self._on_tube_slider
+        )
+        self.sl_tube.pack(fill="x", padx=14, pady=(2, 6))
+
+        # Warmth Exciter
+        f_warm = ctk.CTkFrame(h_card, fg_color="transparent")
+        f_warm.pack(fill="x", padx=14, pady=(4, 0))
+        ctk.CTkLabel(f_warm, text="Göğüs Rezonansı & Warmth Exciter (100-250 Hz Tokluk):", font=FONT_B, text_color=C_SUB).pack(side="left")
+        self.lbl_warm_val = ctk.CTkLabel(f_warm, text="%40", font=FONT_NUM, text_color=C_TITLE)
+        self.lbl_warm_val.pack(side="right")
+
+        self.sl_warm = ctk.CTkSlider(
+            h_card, from_=0.0, to=1.0, number_of_steps=50, height=18,
+            button_color=C_ACCENT, button_hover_color=C_HOVER,
+            command=self._on_warmth_slider
+        )
+        self.sl_warm.pack(fill="x", padx=14, pady=(2, 10))
+
+        # 3. Dinamik De-Esser (Tıslama ve Sert Tiz Önleyici)
+        de_card = ctk.CTkFrame(scroll_p, fg_color="#190e29", corner_radius=10, border_width=1, border_color="#361752")
+        de_card.pack(fill="x", pady=6)
+
+        de_top = ctk.CTkFrame(de_card, fg_color="transparent")
+        de_top.pack(fill="x", padx=14, pady=(8, 2))
+        ctk.CTkLabel(de_top, text="✨ Dinamik De-Esser (4 kHz - 8.5 kHz)", font=FONT_H, text_color=C_TITLE).pack(side="left")
+
+        self.sw_deesser_var = ctk.BooleanVar(value=True)
+        self.sw_deesser = ctk.CTkSwitch(
+            de_top, text="De-Esser Aktif", variable=self.sw_deesser_var, font=("Segoe UI", 10, "bold"),
+            progress_color=C_ACCENT, command=self._on_deesser_switch_toggle
+        )
+        self.sw_deesser.pack(side="right")
+
+        ctk.CTkLabel(de_card, text="Kadın/çocuk seslerinde tizleşen 's/ş/ç' patlamalarını yumuşatır, pürüzsüz vokal sağlar", font=("Segoe UI", 10), text_color=C_SUB).pack(anchor="w", padx=14, pady=(0, 6))
+
+        # De-Esser Miktarı
+        f_de_amt = ctk.CTkFrame(de_card, fg_color="transparent")
+        f_de_amt.pack(fill="x", padx=14, pady=(4, 0))
+        ctk.CTkLabel(f_de_amt, text="Tıslama Baskılama Miktarı:", font=FONT_B, text_color=C_SUB).pack(side="left")
+        self.lbl_de_amt = ctk.CTkLabel(f_de_amt, text="%65", font=FONT_NUM, text_color=C_CYAN)
+        self.lbl_de_amt.pack(side="right")
+
+        self.sl_de_amt = ctk.CTkSlider(
+            de_card, from_=0.0, to=1.0, number_of_steps=50, height=18,
+            button_color=C_ACCENT, button_hover_color=C_HOVER,
+            command=self._on_deesser_amt_slider
+        )
+        self.sl_de_amt.pack(fill="x", padx=14, pady=(2, 6))
+
+        # De-Esser Eşiği
+        f_de_th = ctk.CTkFrame(de_card, fg_color="transparent")
+        f_de_th.pack(fill="x", padx=14, pady=(4, 0))
+        ctk.CTkLabel(f_de_th, text="Sibilance Algılama Eşiği:", font=FONT_B, text_color=C_SUB).pack(side="left")
+        self.lbl_de_th = ctk.CTkLabel(f_de_th, text="-26.0 dB", font=FONT_NUM, text_color=C_TITLE)
+        self.lbl_de_th.pack(side="right")
+
+        self.sl_de_th = ctk.CTkSlider(
+            de_card, from_=-45.0, to=-10.0, number_of_steps=70, height=18,
+            button_color=C_ACCENT, button_hover_color=C_HOVER,
+            command=self._on_deesser_th_slider
+        )
+        self.sl_de_th.pack(fill="x", padx=14, pady=(2, 10))
+
+        # 4. Siber Robot Modülatörü Kartı
         r_card = ctk.CTkFrame(scroll_p, fg_color="#190e29", corner_radius=10, border_width=1, border_color="#361752")
         r_card.pack(fill="x", pady=6)
 
@@ -664,7 +758,21 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
             button_color=C_ACCENT, button_hover_color=C_HOVER,
             command=self._on_robot_res_slider
         )
-        self.sl_robot_res.pack(fill="x", padx=14, pady=(2, 12))
+        self.sl_robot_res.pack(fill="x", padx=14, pady=(2, 8))
+
+        # Bitcrusher (Mekanik Çözünürlük)
+        f_crush = ctk.CTkFrame(r_card, fg_color="transparent")
+        f_crush.pack(fill="x", padx=14, pady=(4, 0))
+        ctk.CTkLabel(f_crush, text="Mekanik Bitcrusher (Çözünürlük):", font=FONT_B, text_color=C_SUB).pack(side="left")
+        self.lbl_robot_crush = ctk.CTkLabel(f_crush, text="16 bit (Doğal)", font=FONT_NUM, text_color=C_CYAN)
+        self.lbl_robot_crush.pack(side="right")
+
+        self.sl_robot_crush = ctk.CTkSlider(
+            r_card, from_=4.0, to=16.0, number_of_steps=12, height=18,
+            button_color=C_ACCENT, button_hover_color=C_HOVER,
+            command=self._on_robot_crush_slider
+        )
+        self.sl_robot_crush.pack(fill="x", padx=14, pady=(2, 12))
 
     def _build_dynamics_tab(self, parent):
         scroll_d = ctk.CTkScrollableFrame(parent, fg_color="transparent")
@@ -797,7 +905,11 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
                 w["q_lbl"].configure(text=f"{b.get('q', 1.0):.2f} Q")
                 w["en_var"].set(b.get("enabled", True))
 
-        # 2. Pitch
+        # 2. Vokal Traktüs & Pitch
+        fmt_pct = prof.get("formant_shift_percent", 0.0)
+        self.sl_formant.set(fmt_pct)
+        self.lbl_formant_val.configure(text=f"{fmt_pct:+.1f}%")
+
         st = prof.get("pitch_semitones", 0.0)
         fine = prof.get("pitch_fine_cents", 0.0)
         self.sl_pitch_st.set(st)
@@ -805,11 +917,33 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
         self.sl_pitch_fine.set(fine)
         self.lbl_pitch_fine.configure(text=f"{fine:+.0f} cent")
 
-        # 3. Robot
+        # 3. Harmonik Saturasyon & Exciter
+        tube = prof.get("tube_saturation_drive", 0.2)
+        self.sl_tube.set(tube)
+        self.lbl_tube_val.configure(text=f"%{int(tube * 100)}")
+
+        warm = prof.get("warmth_exciter_amount", 0.2)
+        self.sl_warm.set(warm)
+        self.lbl_warm_val.configure(text=f"%{int(warm * 100)}")
+
+        # 4. Dinamik De-Esser
+        de_en = prof.get("deesser_enabled", True)
+        self.sw_deesser_var.set(de_en)
+
+        de_amt = prof.get("deesser_amount", 0.6)
+        self.sl_de_amt.set(de_amt)
+        self.lbl_de_amt.configure(text=f"%{int(de_amt * 100)}")
+
+        de_th = prof.get("deesser_threshold_db", -26.0)
+        self.sl_de_th.set(de_th)
+        self.lbl_de_th.configure(text=f"{de_th:.1f} dB")
+
+        # 5. Robot
         r_en = prof.get("robot_enabled", False)
         r_hz = prof.get("robot_carrier_hz", 65.0)
         r_dep = prof.get("robot_depth", 0.8)
         r_res = prof.get("robot_resonance", 0.5)
+        r_crush = prof.get("robot_bitcrush_bits", 16)
 
         self.sw_robot_var.set(r_en)
         self.sl_robot_hz.set(r_hz)
@@ -818,8 +952,10 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
         self.lbl_robot_dep.configure(text=f"%{int(r_dep * 100)}")
         self.sl_robot_res.set(r_res)
         self.lbl_robot_res.configure(text=f"%{int(r_res * 100)}")
+        self.sl_robot_crush.set(r_crush)
+        self.lbl_robot_crush.configure(text=f"{int(r_crush)} bit" + (" (Doğal)" if r_crush >= 16 else ""))
 
-        # 4. Dynamics
+        # 6. Dynamics
         dyn = prof.get("dynamics", {})
         self.sl_dyn_gate.set(dyn.get("gate_threshold_db", -45.0))
         self.lbl_dyn_gate.configure(text=f"{dyn.get('gate_threshold_db', -45.0):.1f} dB")
@@ -838,6 +974,40 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
 
         self.sl_dyn_mk.set(dyn.get("makeup_gain_db", 0.0))
         self.lbl_dyn_mk.configure(text=f"{dyn.get('makeup_gain_db', 0.0):+.1f} dB")
+
+    def _on_formant_slider(self, val: float):
+        v = round(val, 1)
+        self.lbl_formant_val.configure(text=f"{v:+.1f}%")
+        self.dsp_engine.update_profile_param("vocal", "formant_shift_percent", float(v))
+
+    def _on_tube_slider(self, val: float):
+        v = round(val, 2)
+        self.lbl_tube_val.configure(text=f"%{int(v * 100)}")
+        self.dsp_engine.update_profile_param("vocal", "tube_saturation_drive", float(v))
+
+    def _on_warmth_slider(self, val: float):
+        v = round(val, 2)
+        self.lbl_warm_val.configure(text=f"%{int(v * 100)}")
+        self.dsp_engine.update_profile_param("vocal", "warmth_exciter_amount", float(v))
+
+    def _on_deesser_switch_toggle(self):
+        en = self.sw_deesser_var.get()
+        self.dsp_engine.update_profile_param("vocal", "deesser_enabled", en)
+
+    def _on_deesser_amt_slider(self, val: float):
+        v = round(val, 2)
+        self.lbl_de_amt.configure(text=f"%{int(v * 100)}")
+        self.dsp_engine.update_profile_param("vocal", "deesser_amount", float(v))
+
+    def _on_deesser_th_slider(self, val: float):
+        v = round(val, 1)
+        self.lbl_de_th.configure(text=f"{v:.1f} dB")
+        self.dsp_engine.update_profile_param("vocal", "deesser_threshold_db", float(v))
+
+    def _on_robot_crush_slider(self, val: float):
+        v = int(round(val))
+        self.lbl_robot_crush.configure(text=f"{v} bit" + (" (Doğal)" if v >= 16 else ""))
+        self.dsp_engine.update_profile_param("robot", "robot_bitcrush_bits", int(v))
 
     def _on_eq_enable_toggle(self, band_idx: int, enabled: bool):
         self.dsp_engine.update_profile_param("eq", "enabled", enabled, band_index=band_idx)
