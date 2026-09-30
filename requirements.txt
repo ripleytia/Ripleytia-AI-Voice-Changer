@@ -1,25 +1,26 @@
-# Ripleytia AI Ses Değiştirici - Python Bağımlılıkları
+# Ripleytia AI Ses Değiştirici - Python Bağımlılıkları (Pre-compiled Binary Sürümler)
 # =========================================================
 
 # 1. Kullanıcı Arayüzü (GUI)
-customtkinter>=5.2.0
-pillow>=10.0.0
+customtkinter==5.2.2
+pillow==10.3.0
 
 # 2. Ses Giriş / Çıkış ve DSP
-sounddevice>=0.4.6
-soundfile>=0.12.1
-numpy>=1.23.5,<2.0.0
-scipy>=1.10.0
-librosa>=0.10.0
-resampy>=0.4.2
+sounddevice==0.4.6
+soundfile==0.12.1
+numpy==1.26.4
+scipy==1.13.0
+librosa==0.10.1
+resampy==0.4.3
 
 # 3. Model & Çıkarım (ONNX / Pitch)
-onnxruntime>=1.16.0
-pyworld>=0.3.4
-praat-parselmouth>=0.4.3
-faiss-cpu>=1.7.3
+onnxruntime==1.17.3
+pyworld==0.3.4
+praat-parselmouth==0.4.3
+faiss-cpu==1.7.4
 
 # 4. Yardımcı Araçlar
-requests>=2.31.0
-pyyaml>=6.0
-packaging>=23.0
+requests==2.31.0
+pyyaml==6.0.1
+packaging==23.2
+PyInstaller==6.5.0

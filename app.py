@@ -26,6 +26,14 @@ from typing import Optional, Dict, Any, List
 from tkinter import filedialog, messagebox
 import threading
 
+# [KRİTİK]: PyInstaller veya Yerel Çalışma İçin Dinamik Ana Dizin Yakalayıcı
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    BASE_DIR = sys._MEIPASS  # PyInstaller Temp Klasörü (Exe çalışırken)
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # Normal Python çalışması
+sys.path.append(BASE_DIR)
+
+
 # Windows konsolunda UTF-8 karakterlerin çökmesini engelle
 try:
     if hasattr(sys.stdout, "reconfigure"):
@@ -138,7 +146,7 @@ for msg in opt_logs:
     print("[OPTIMIZER]", msg)
 
 # ── 2. W-OKADA BACKEND IMPORT VE YOLLARI ──
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(BASE_DIR)
 candidates = [
     ROOT / "server",
     ROOT / "w-okada" / "server",
@@ -242,7 +250,7 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
         self.after(300, self._perf_monitor_loop)
 
     def _set_app_icons(self):
-        assets_dir = ROOT / "assets" if (ROOT / "assets").exists() else (ROOT / "v3" / "assets" if (ROOT / "v3" / "assets").exists() else ROOT.parent / "v3" / "assets")
+        assets_dir = ROOT / "assets"
         ico_file = assets_dir / "icon.ico"
         logo_file = assets_dir / "logo_64.png"
 
@@ -268,7 +276,7 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
         title_box = ctk.CTkFrame(header_frame, fg_color="transparent")
         title_box.pack(side="left", padx=16, pady=8)
 
-        logo_file = (ROOT / "assets" / "logo_64.png") if (ROOT / "assets" / "logo_64.png").exists() else (ROOT / "v3" / "assets" / "logo_64.png")
+        logo_file = ROOT / "assets" / "logo_64.png"
         if logo_file.exists():
             try:
                 pil_logo = Image.open(str(logo_file))

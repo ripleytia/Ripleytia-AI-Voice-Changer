@@ -29,3 +29,12 @@ logs/
 .idea/
 Thumbs.db
 Desktop.ini
+
+# Derleme ve Setup Artifactleri
+build/
+dist/
+*.spec
+pip-wheel-metadata/
+.pytest_cache/
+Output/
+

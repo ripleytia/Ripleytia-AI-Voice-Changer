@@ -33,7 +33,12 @@ import numpy as np
 import scipy.signal
 import sounddevice as sd
 
-PROFILES_FILE = Path(__file__).resolve().parent / "dsp_profiles.json"
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+PROFILES_FILE = os.path.join(BASE_DIR, "dsp_profiles.json")
 
 # ── 1. GELİŞMİŞ GÖMÜLÜ SES PROFİLLERİ (AKILLI ANATOMİK ÖNAYARLAR) ──
 DEFAULT_PROFILES: Dict[str, Any] = {
