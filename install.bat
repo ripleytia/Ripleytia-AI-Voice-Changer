@@ -22,22 +22,41 @@ if exist ".venv" (
     rmdir /s /q ".venv"
 )
 
-:: 2. Dinamik Sanal Ortam Olusturma
-echo [2/4] Sifirdan dinamik Python sanal ortami (venv) olusturuluyor...
-python -m venv venv
+:: 2. Python Sürüm Kontrolü (Python 3.13+ pyworld derleme hatasını engeller)
+echo [2/5] Python surumu kontrol ediliyor...
+python -c "import sys; sys.exit(0 if sys.version_info < (3, 13) else 1)"
 if errorlevel 1 (
-    echo [HATA] venv olusturulamadi! Sisteminizde Python 3 kurulu oldugundan emin olun.
+    echo.
+    echo =========================================================================
+    echo [KIRITIK HATA] Sisteminizde Python 3.13 veya daha yeni bir surum (Orn: 3.14) bulundu!
+    echo.
+    echo RVC ve yapay zeka (pyworld, onnx) paketlerinin bu surumler icin
+    echo henüz hazir derlenmis (wheel) dosyalari bulunmamaktadir.
+    echo Bu yuzden C++ derleyicisi istemekte ve kurulum cokmektedir.
+    echo.
+    echo COZUM: 
+    echo Lutfen mevcut Python surumunuzu silin ve Python 3.11 veya 3.12 yukleyin.
+    echo =========================================================================
     pause
     exit /b 1
 )
 
-:: 3. Ortami Aktif Et ve Kurulum Araclari Guncelle
-echo [3/4] Sanal ortam aktif ediliyor ve tekerlek (wheel) yapicilar guncelleniyor...
+:: 3. Dinamik Sanal Ortam Olusturma
+echo [3/5] Sifirdan dinamik Python sanal ortami (venv) olusturuluyor...
+python -m venv venv
+if errorlevel 1 (
+    echo [HATA] venv olusturulamadi! Sisteminizde Python kurulu oldugundan emin olun.
+    pause
+    exit /b 1
+)
+
+:: 4. Ortami Aktif Et ve Kurulum Araclari Guncelle
+echo [4/5] Sanal ortam aktif ediliyor ve tekerlek (wheel) yapicilar guncelleniyor...
 call .\venv\Scripts\activate.bat
 python -m pip install --upgrade pip setuptools wheel >nul 2>&1
 
-:: 4. Pre-Compiled (Onceden Derlenmis) Kutuphaneleri Kur
-echo [4/4] Bagimliliklar kuruluyor (C++ Derleme Korumasi Aktif / Sadece Binary)...
+:: 5. Pre-Compiled (Onceden Derlenmis) Kutuphaneleri Kur
+echo [5/5] Bagimliliklar kuruluyor (Sadece hazir paketler indirilir)...
 :: C++ veya Meson hatasini onlemek icin sadece wheel/binary indirmeye zorluyoruz.
 :: Not: pyworld, faiss gibi bazi paketlerin binary versiyonlari icin prefer-binary 
 :: ve genel paketler icin only-binary kullanimi guvenlik kalkanidir.
