@@ -1,7 +1,6 @@
 @echo off
 title Ripleytia AI Ses Degistirici V1 - OTO ONARIMLI KURULUM
 chcp 65001 >nul
-setlocal enabledelayedexpansion
 
 echo =========================================================
 echo   Ripleytia AI Ses Degistirici V1 - AKILLI KURULUM
@@ -12,36 +11,43 @@ echo.
 cd /d "%~dp0"
 
 :: 1. Uygun Python Surumunu Ara (3.10, 3.11 veya 3.12)
-echo [1/5] Sistemdeki Python surumleri ve uyumluluk taranir...
+echo [1/5] Sistemdeki Python surumleri ve uyumluluk taraniyor...
 set PYTHON_CMD=
 
-:: Once mevcut genel python komutunu kontrol et (Sadece 3.10 - 3.12 arasina izin verilir)
+:: A) Normal python komutunu kontrol et
 python -c "import sys; sys.exit(0 if (3,10) <= sys.version_info < (3,13) else 1)" >nul 2>&1
 if %ERRORLEVEL% EQU 0 (
     set PYTHON_CMD=python
     echo [BILGI] Mevcut Python surumunuz tam uyumlu.
-) else (
-    echo [UYARI] Varsayilan Python uymuyor (3.13/3.14) veya yuklu degil.
-    echo [BILGI] Sistemde kurulu baska uyumlu surum var mi kontrol ediliyor...
-    
-    py -3.11 -c "import sys; sys.exit(0)" >nul 2>&1
-    if !ERRORLEVEL! EQU 0 (
-        set PYTHON_CMD=py -3.11
-    ) else (
-        py -3.12 -c "import sys; sys.exit(0)" >nul 2>&1
-        if !ERRORLEVEL! EQU 0 (
-            set PYTHON_CMD=py -3.12
-        ) else (
-            py -3.10 -c "import sys; sys.exit(0)" >nul 2>&1
-            if !ERRORLEVEL! EQU 0 (
-                set PYTHON_CMD=py -3.10
-            )
-        )
-    )
+    goto :python_found
 )
 
+echo [UYARI] Varsayilan Python uymuyor (3.13/3.14) veya yuklu degil. Baska surum var mi bakiliyor...
+
+:: B) py launcher ile 3.11 kontrol
+py -3.11 -c "import sys; sys.exit(0)" >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    set PYTHON_CMD=py -3.11
+    goto :python_found
+)
+
+:: C) py launcher ile 3.12 kontrol
+py -3.12 -c "import sys; sys.exit(0)" >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    set PYTHON_CMD=py -3.12
+    goto :python_found
+)
+
+:: D) py launcher ile 3.10 kontrol
+py -3.10 -c "import sys; sys.exit(0)" >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    set PYTHON_CMD=py -3.10
+    goto :python_found
+)
+
+:python_found
 :: Eğer hicbir uyumlu sürüm yoksa OTOMATİK OLARAK İNDİR VE KUR
-if "!PYTHON_CMD!"=="" (
+if "%PYTHON_CMD%"=="" (
     echo [KIRITIK HATA] Sisteminizde uyumlu bir Python surumu bulunamadi!
     echo [OTO-ONARIM] Hicbir yazi yazmaniza gerek yok. Python 3.11 sessizce indirilip kuruluyor...
     echo Lutfen bekleyin, bu islem internet hiziniza gore 1-3 dakika surebilir...
@@ -52,8 +58,6 @@ if "!PYTHON_CMD!"=="" (
         start /wait python_installer.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
         del python_installer.exe
         echo [BASARILI] Python 3.11 basariyla kuruldu!
-        
-        :: Kurulum sonrasi py launcher veya direkt python path'i test et
         set PYTHON_CMD=python
     ) else (
         echo [HATA] Otomatik Python indirme basarisiz oldu. Lutfen Python 3.11'i elle kurun.
@@ -62,7 +66,7 @@ if "!PYTHON_CMD!"=="" (
     )
 )
 
-echo [BILGI] Secilen Guvenli Python Motoru: !PYTHON_CMD!
+echo [BILGI] Secilen Guvenli Python Motoru: %PYTHON_CMD%
 echo.
 
 :: 2. Eski ve Bozuk Venv Temizligi
@@ -72,7 +76,7 @@ if exist ".venv" rmdir /s /q ".venv"
 
 :: 3. Sanal Ortam Olusturma (Tam Uyumlu Surum Ile)
 echo [3/5] Uyumlu ve guvenli sanal ortam olusturuluyor...
-!PYTHON_CMD! -m venv venv
+%PYTHON_CMD% -m venv venv
 if not exist "venv\Scripts\activate.bat" (
     echo [HATA] Sanal ortam kurulamadi! Lutfen bilgisayari yeniden baslatip tekrar deneyin.
     pause
@@ -92,15 +96,14 @@ echo (Bu asama tamamen otomatik gececektir, lutfen bekleyin)
 pip install --prefer-binary -r requirements.txt
 if %ERRORLEVEL% NEQ 0 (
     echo.
-    echo [UYARI] Bazi paketler ozel kurulum istedi. Guvenlik agi (Safety Net) devreye giriyor...
+    echo [UYARI] Bazi paketler ozel kurulum istedi. Guvenlik agi devreye giriyor...
     pip install -r requirements.txt
 )
 
 echo.
 echo =========================================================
-echo [BAŞARILI] Akilli OTO-ONARIM sistemi her seyi eksiksiz tamamladi!
-echo Hata veren her sey (C++ eksikligi, yanlis Python) onarildi.
-echo Uygulamayi baslatmak icin 'run.bat' dosyasini calistirabilirsiniz.
+echo [BASARILI] Akilli OTO-ONARIM sistemi her seyi eksiksiz tamamladi!
+echo Hata veren her sey onarildi. Uygulamayi baslatmak icin 'run.bat' dosyasini calistirabilirsiniz.
 echo =========================================================
 pause
 exit /b 0
