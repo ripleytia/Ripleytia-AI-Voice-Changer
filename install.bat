@@ -31,10 +31,10 @@ if errorlevel 1 (
     exit /b 1
 )
 
-:: 3. Ortami Aktif Et ve PIP'i Guncelle (Goreceli Yol ile)
-echo [3/4] Sanal ortam aktif ediliyor...
+:: 3. Ortami Aktif Et ve Kurulum Araclari Guncelle
+echo [3/4] Sanal ortam aktif ediliyor ve tekerlek (wheel) yapicilar guncelleniyor...
 call .\venv\Scripts\activate.bat
-python -m pip install --upgrade pip >nul 2>&1
+python -m pip install --upgrade pip setuptools wheel >nul 2>&1
 
 :: 4. Pre-Compiled (Onceden Derlenmis) Kutuphaneleri Kur
 echo [4/4] Bagimliliklar kuruluyor (C++ Derleme Korumasi Aktif / Sadece Binary)...
