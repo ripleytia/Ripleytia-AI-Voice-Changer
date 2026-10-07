@@ -1545,6 +1545,9 @@ class RipleytiaVoiceChangerApp(ctk.CTk):
         self.after(250, self._perf_monitor_loop)
 
 
+import multiprocessing
+
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     app = RipleytiaVoiceChangerApp()
     app.mainloop()
