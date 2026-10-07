@@ -550,7 +550,7 @@ class DSPVoiceEngine:
 
     def _load_profiles(self) -> Dict[str, Any]:
         """Profilleri JSON dosyasından oku veya varsayılanları kaydet"""
-        if PROFILES_FILE.exists():
+        if os.path.exists(PROFILES_FILE):
             try:
                 with open(PROFILES_FILE, "r", encoding="utf-8") as f:
                     data = json.load(f)
